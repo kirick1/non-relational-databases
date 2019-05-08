@@ -38,7 +38,6 @@ class Parser {
   static async saveDataToXMLFile (data, filename = 'result.xml') {
     const normalizedData = data.map(a => ({ fragment: a }))
     const xmlData = builder.buildObject(normalizedData)
-    console.log('XML: ', xmlData)
     await Write(join(__dirname, '..', filename), xmlData)
   }
 }

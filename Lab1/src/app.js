@@ -13,6 +13,7 @@ void (async function () {
           const requests = []
           for (let i = 1; i <= 10; i++) requests.push(Parser.getDocumentLinksObjects(`${task.base_url}?page=${i}`))
           const result = (await Promise.all(requests)).flat()
+          console.log('RESULT: ', result)
           await Parser.saveDataToXMLFile(result)
           break
         }
