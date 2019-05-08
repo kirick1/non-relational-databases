@@ -2,17 +2,18 @@ const { join } = require('path')
 const { writeFile } = require('fs')
 const { promisify } = require('util')
 const { Builder } = require('xml2js')
-const cheerio = require('cheerio')
+
+const { load } = require('cheerio')
 
 const builder = new Builder()
 
 const Write = promisify(writeFile)
 
-const { Request } = require('./utils')
+const { Request } = require('./request')
 
 class Parser {
   static parsePageToDocument (body) {
-    return cheerio.load(body, {
+    return load(body, {
       withDomLvl1: true,
       normalizeWhitespace: false,
       xmlMode: false,
