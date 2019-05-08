@@ -1,5 +1,3 @@
-const xpath = require('xpath/xpath')
-
 const cheerio = require('cheerio')
 
 class Parser {
@@ -11,11 +9,9 @@ class Parser {
       decodeEntities: true
     })
   }
-  static parseDocumentLinks (page) {
-    return page('a').toArray().map(a => a.attribs.href)
-  }
   static getDocumentLinks (page) {
-    const articles = page('div[class="article article_section"]').text()
+    const articleSections = page('div[class="article article_section"]')
+    const articles = articleSections.text()
     const articlesDataArray = articles.split('\n').map(a => a.trim()).filter(a => a !== '')
     const links = []
     for (let i = 0; i < articlesDataArray.length; i += 3) {
