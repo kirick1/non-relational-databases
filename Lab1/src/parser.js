@@ -1,5 +1,7 @@
 const cheerio = require('cheerio')
 
+const { Request } = require('./utils')
+
 class Parser {
   static parsePageToDocument (body) {
     return cheerio.load(body, {
@@ -19,6 +21,11 @@ class Parser {
       links.push({ time, title, subtitle })
     }
     return links
+  }
+  static async getDocumentLinksObjects (url) {
+    const pageBody = await Request.getPageByURL(url)
+    const document = Parser.parsePageToDocument(pageBody)
+    return Parser.getDocumentLinks(document)
   }
 }
 
