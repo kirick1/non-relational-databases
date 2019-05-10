@@ -36,6 +36,17 @@ class Parser {
     const document = Parser.parsePageToDocument(pageBody)
     return Parser.getDocumentLinks(document)
   }
+  static getShopItems (page) {
+    const pageItems = page('div[class="cataloglist-item-container catalog-product-card-grid"]')
+    const items = pageItems.text()
+    console.log('ITEMS: ', items)
+    return items
+  }
+  static async getShopItemsObjects (url) {
+    const pageBody = await Request.getPageByURL(url)
+    const document = Parser.parsePageToDocument(pageBody)
+    return Parser.getShopItems(document)
+  }
   static async saveDataToXMLFile (data, filename = 'result.xml') {
     const normalizedData = data.map(a => ({ fragment: a }))
     const xmlData = builder.buildObject(normalizedData)
