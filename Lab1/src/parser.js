@@ -25,7 +25,7 @@ class Parser {
     const articles = articleSections.text()
     const articlesDataArray = articles.split('\n').map(a => a.trim()).filter(a => a !== '')
     const links = []
-    for (let i = 0; i < articlesDataArray.length; i += 3) {
+    for (let i = 0, num = articlesDataArray.length; i < num; i += 3) {
       const [time, title, subtitle] = articlesDataArray.slice(i, i + 3)
       links.push({ time, title, subtitle })
     }
@@ -37,9 +37,15 @@ class Parser {
     return Parser.getDocumentLinks(document)
   }
   static getShopItems (page) {
-    const pageItems = page('div[class="cataloglist-item-container catalog-product-card-grid"]')
-    const items = pageItems.text()
-    console.log('ITEMS: ', items)
+    const pageItems = page('div[class="cataloglist-item-container"]')
+    const itemsData = pageItems.text()
+    const itemsDataArray = itemsData.split('\n').map(a => a.trim()).filter(a => a !== '')
+    console.log(itemsDataArray)
+    const items  = []
+    for (let i = 0, num = itemsDataArray.length; i < num; i += 13) {
+      const [,, code, availability, title, price,,, rating,, description,,] = itemsDataArray.slice(i, i += 13)
+      items.push({ code, availability, title, price, rating, description })
+    }
     return items
   }
   static async getShopItemsObjects (url) {

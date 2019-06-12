@@ -18,7 +18,7 @@ void (async function () {
           break
         }
         case cli.main.options.TASK_2: {
-          const items = await Parser.getShopItemsObjects(task.online_store)
+          const items = await Parser.getShopItemsObjects(`${task.online_store}/category/naushniki.html`)
           console.log('ITEMS: ', items)
           break
         }
